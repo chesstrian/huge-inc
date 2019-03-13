@@ -50,18 +50,27 @@ class CanvasEditor(object):
         if not self.canvas:
             raise CanvasNotCreatedException('You can only draw if a canvas has been created.')
 
-        if not (1 <= x <= self.width and 1 <= y <= self.height):
+        if not self._is_fillable(x, y, c):
             return
 
-        if self.canvas[y][x] in ('-', '|', 'x', c):
-            return
+        points = set()
+        points.add((x, y))
 
-        self.canvas[y][x] = c
+        while points:
+            x, y = points.pop()
+            self.canvas[y][x] = c
 
-        self.bucket_fill(x - 1, y, c)
-        self.bucket_fill(x + 1, y, c)
-        self.bucket_fill(x, y - 1, c)
-        self.bucket_fill(x, y + 1, c)
+            if self._is_fillable(x - 1, y, c):
+                points.add((x - 1, y))
+            if self._is_fillable(x + 1, y, c):
+                points.add((x + 1, y))
+            if self._is_fillable(x, y - 1, c):
+                points.add((x, y - 1))
+            if self._is_fillable(x, y + 1, c):
+                points.add((x, y + 1))
+
+    def _is_fillable(self, x, y, c):
+        return (1 <= x <= self.width and 1 <= y <= self.height) and self.canvas[y][x] not in ('-', '|', 'x', c)
 
     def render_canvas(self):
         print(self.__str__())
