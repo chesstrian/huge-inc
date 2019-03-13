@@ -13,13 +13,13 @@ def run_command(canvas, line):
 
     if command == 'C':
         canvas.create_canvas(*arguments)
-        canvas.render_canvas()
+        print(canvas.__str__())
     elif command == 'L':
         canvas.create_line(*arguments)
-        canvas.render_canvas()
+        print(canvas.__str__())
     elif command == 'R':
         canvas.create_rectangle(*arguments)
-        canvas.render_canvas()
+        print(canvas.__str__())
     elif command == 'B':
         canvas.bucket_fill(*arguments)
-        canvas.render_canvas()
+        print(canvas.__str__())

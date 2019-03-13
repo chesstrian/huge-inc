@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from drawing import CanvasEditor, CanvasNotCreatedException
+from drawing import CanvasEditor, CanvasNotCreatedException, InvalidLineException, OutOfRangeException
 
 
 class ExampleCanvasTest(TestCase):
@@ -38,5 +38,31 @@ class ExampleCanvasTest(TestCase):
         c = CanvasEditor()
 
         self.assertRaises(CanvasNotCreatedException, c.create_line, *(1, 2, 6, 2))
-        self.assertRaises(CanvasNotCreatedException, c.create_rectangle, *(116, 1, 20, 3))
+        self.assertRaises(CanvasNotCreatedException, c.create_rectangle, *(16, 1, 20, 3))
         self.assertRaises(CanvasNotCreatedException, c.bucket_fill, *(10, 3, 'c'))
+
+    def test_not_horizontal_nor_vertical_line(self):
+        c = CanvasEditor()
+        c.create_canvas(20, 4)
+
+        self.assertRaises(InvalidLineException, c.create_line, *(1, 3, 6, 2))
+
+    def test_out_of_canvas(self):
+        c = CanvasEditor()
+        c.create_canvas(20, 4)
+        c.create_line(1, 2, 6, 2)
+
+        self.assertRaises(OutOfRangeException, c.create_line, *(21, 3, 6, 2))
+        self.assertRaises(OutOfRangeException, c.create_line, *(1, 3, 6, 5))
+        self.assertRaises(OutOfRangeException, c.bucket_fill, *(1, 5, 'o'))
+
+    def test_not_fill(self):
+        c = CanvasEditor()
+        c.create_canvas(20, 4)
+        c.create_line(1, 2, 6, 2)
+
+        before = c.__str__()
+        c.bucket_fill(3, 2, 'o')
+        after = c.__str__()
+
+        self.assertEqual(before, after)

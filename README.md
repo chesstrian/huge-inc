@@ -1,18 +1,16 @@
 # Huge Inc
 _Code Challenge_
 
-Demo app for Huge Inc's code challenge.
-
-Solution developed in Python 
+Demo app for Huge Inc's code challenge. Solution developed in Python 
 
 ## Run Tests
 
-* `python -m unittest discover drawing/tests/`
+* `python tests.py`
 
 ## Code coverage
 
 * `pip install coverage`
-* `coverage run main.py -i input/input.txt -o input/output.txt`
+* `coverage run tests.py`
 * `coverage report -m`
 
 ## Run Project

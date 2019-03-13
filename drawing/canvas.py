@@ -1,4 +1,4 @@
-from drawing.exceptions import CanvasNotCreatedException, OutOfRangeException, InvalidLineException
+from exceptions import CanvasNotCreatedException, OutOfRangeException, InvalidLineException
 
 
 class CanvasEditor(object):
@@ -50,6 +50,9 @@ class CanvasEditor(object):
         if not self.canvas:
             raise CanvasNotCreatedException('You can only draw if a canvas has been created.')
 
+        if not (1 <= x <= self.width and 1 <= y <= self.height):
+            raise OutOfRangeException('The seek is not inside the canvas')
+
         if not self._is_fillable(x, y, c):
             return
 
@@ -70,10 +73,7 @@ class CanvasEditor(object):
                 points.add((x, y + 1))
 
     def _is_fillable(self, x, y, c):
-        return (1 <= x <= self.width and 1 <= y <= self.height) and self.canvas[y][x] not in ('-', '|', 'x', c)
-
-    def render_canvas(self):
-        print(self.__str__())
+        return 1 <= x <= self.width and 1 <= y <= self.height and self.canvas[y][x] not in ('-', '|', 'x', c)
 
     def __str__(self):
         return '\n'.join([''.join(line) for line in self.canvas])
