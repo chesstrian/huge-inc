@@ -2,10 +2,11 @@ from exceptions import CanvasNotCreatedException, OutOfRangeException, InvalidLi
 
 
 class CanvasEditor(object):
-    width = None
-    height = None
 
-    canvas = None
+    def __init__(self):
+        self.width = self.height = None
+
+        self.canvas = []
 
     def create_canvas(self, width, height):
         self.width = width

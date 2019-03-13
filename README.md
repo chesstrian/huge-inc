@@ -7,7 +7,7 @@ Demo app for Huge Inc's code challenge. Solution developed in Python
 
 * `python tests.py`
 
-## Code coverage
+## Test Coverage
 
 * `pip install coverage`
 * `coverage run tests.py`
