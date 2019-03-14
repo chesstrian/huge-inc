@@ -94,7 +94,7 @@ class PrintCommand(Command):
         print(self.canvas.__str__())
 
 
-def run_command(canvas, line):
+def run_command(canvas, line, render=True):
     line = line.split(' ')
     letter = line.pop(0)
 
@@ -109,4 +109,5 @@ def run_command(canvas, line):
     else:
         raise UnsupportedCommandException('Unsupported command!')
 
-    PrintCommand(canvas).run()
+    if render:
+        PrintCommand(canvas).run()

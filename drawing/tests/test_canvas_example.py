@@ -3,9 +3,9 @@ from unittest import TestCase
 from drawing import CanvasEditor, CanvasNotCreatedException, InvalidLineException, OutOfRangeException
 
 
-class ExampleCanvasTest(TestCase):
+class CanvasExampleTest(TestCase):
 
-    def test_example_input_example_output(self):
+    def test_canvas_example_output(self):
         outputs = []
         with open('drawing/tests/fixtures/output.txt', 'r') as f:
             lines = f.readlines()

@@ -31,10 +31,18 @@ class CanvasEditor(object):
             raise OutOfRangeException('The second point is not inside the canvas')
 
         if y1 == y2:  # Horizontal line
+            if x2 < x1:
+                self.create_line(x2, y2, x1, y1)
+                return
+
             for i in range(x1, x2 + 1):
                 self.canvas[y2][i] = 'x'
             return
         elif x1 == x2:  # Vertical line
+            if y2 < y1:
+                self.create_line(x2, y2, x1, y1)
+                return
+
             for i in range(y1, y2 + 1):
                 self.canvas[i][x1] = 'x'
             return
