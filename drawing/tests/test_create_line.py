@@ -45,3 +45,15 @@ class CreateLineTest(TestCase):
         c.create_line(2, 3, 2, 1)
 
         self.assertEqual(c.__str__(), self.vertical)
+
+    def test_line_same_point(self):
+        c = CanvasEditor()
+        c.create_canvas(2, 2)
+        c.create_line(2, 2, 2, 2)
+
+        result = '----\n' \
+                 '|  |\n' \
+                 '| x|\n' \
+                 '----'
+
+        self.assertEqual(c.__str__(), result)

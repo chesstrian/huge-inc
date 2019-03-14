@@ -38,3 +38,15 @@ class CreateRectTest(TestCase):
         c.create_rectangle(4, 4, 2, 2)
 
         self.assertEqual(c.__str__(), self.rectangle)
+
+    def test_rect_same_point(self):
+        c = CanvasEditor()
+        c.create_canvas(2, 2)
+        c.create_rectangle(2, 2, 2, 2)
+
+        result = '----\n' \
+                 '|  |\n' \
+                 '| x|\n' \
+                 '----'
+
+        self.assertEqual(c.__str__(), result)
