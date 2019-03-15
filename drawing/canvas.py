@@ -1,7 +1,9 @@
-from drawing.exceptions import CanvasNotCreatedException, OutOfRangeException, InvalidLineException
+from drawing.exceptions import CanvasNotCreatedException, OutOfRangeException, InvalidLineException, InvalidCanvasSize
 
 
 class CanvasEditor(object):
+    """Canvas handler, low level of operations.
+    """
 
     def __init__(self):
         self.width = self.height = None
@@ -9,6 +11,14 @@ class CanvasEditor(object):
         self.canvas = []
 
     def create_canvas(self, width, height):
+        """Create empty canvas
+
+        :param width: Canvas width
+        :param height: Canvas height
+        """
+        if width < 1 or height < 1:
+            raise InvalidCanvasSize('Invalid size for canvas')
+
         self.width = width
         self.height = height
 
@@ -21,6 +31,13 @@ class CanvasEditor(object):
                 self.canvas.append(['|'] + [' '] * self.width + ['|'])
 
     def create_line(self, x1, y1, x2, y2):
+        """Create a line inside canvas from P1(x1, y1) to P2(x2, y2), only horizontal and vertical lines supported.
+
+        :param x1: First point horizontal entry
+        :param y1: First point vertical entry
+        :param x2: Second point horizontal entry
+        :param y2: Second point vertical entry
+        """
         if not self.canvas:
             raise CanvasNotCreatedException('You can only draw if a canvas has been created')
 
@@ -50,12 +67,25 @@ class CanvasEditor(object):
         raise InvalidLineException('Not horizontal nor vertical line')
 
     def create_rectangle(self, x1, y1, x2, y2):
+        """Create a rectangle inside canvas. The rectangle is defined by a diagonal given by the two points received.
+
+        :param x1: First point horizontal entry
+        :param y1: First point vertical entry
+        :param x2: Second point horizontal entry
+        :param y2: Second point vertical entry
+        """
         self.create_line(x1, y1, x2, y1)
         self.create_line(x1, y1, x1, y2)
         self.create_line(x2, y1, x2, y2)
         self.create_line(x1, y2, x2, y2)
 
     def bucket_fill(self, x, y, c):
+        """Fill with color c all connected points to P(x, y) with the same color.
+
+        :param x: Seek point horizontal entry
+        :param y: Seek point vertical entry
+        :param c: Color to fill with
+        """
         if not self.canvas:
             raise CanvasNotCreatedException('You can only draw if a canvas has been created.')
 
@@ -92,6 +122,13 @@ class CanvasEditor(object):
                     points.add((i, bottom))
 
     def _is_fillable(self, x, y, c):
+        """Check if a given point P(x, y) is valid inside canvas and has color c.
+
+        :param x: Horizontal entry
+        :param y: Vertical entry
+        :param c: Color, defined by a valid character
+        :return: True if point is valid and has color c, False otherwise
+        """
         return 1 <= x <= self.width and 1 <= y <= self.height and self.canvas[y][x] == c
 
     def __str__(self):

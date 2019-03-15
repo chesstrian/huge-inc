@@ -6,6 +6,10 @@ class UnsupportedCommandException(Exception):
     pass
 
 
+class InvalidCanvasSize(Exception):
+    pass
+
+
 class CanvasNotCreatedException(Exception):
     pass
 

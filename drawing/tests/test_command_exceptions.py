@@ -2,11 +2,12 @@ from unittest import TestCase
 
 from drawing import CanvasEditor, InvalidArgumentsException, run_command, UnsupportedCommandException, \
     CanvasNotCreatedException
-from drawing.commands import Command, CreateCanvasCommand, CreateLineCommand, CreateRectangleCommand, BucketFillCommand
+from drawing.commands import BaseCommand, CreateCanvasCommand, CreateLineCommand, CreateRectangleCommand, \
+    BucketFillCommand
 
 
 # noinspection PyAbstractClass
-class ChildCommand(Command):
+class ChildCommand(BaseCommand):
     pass
 
 

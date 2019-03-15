@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-from drawing import CanvasEditor, CanvasNotCreatedException, InvalidLineException, OutOfRangeException
+from drawing import CanvasEditor, CanvasNotCreatedException, InvalidLineException, OutOfRangeException, \
+    InvalidCanvasSize
 
 
 class CanvasExampleTest(TestCase):
@@ -40,6 +41,11 @@ class CanvasExampleTest(TestCase):
         self.assertRaises(CanvasNotCreatedException, c.create_line, *(1, 2, 6, 2))
         self.assertRaises(CanvasNotCreatedException, c.create_rectangle, *(16, 1, 20, 3))
         self.assertRaises(CanvasNotCreatedException, c.bucket_fill, *(10, 3, 'c'))
+
+    def test_canvas_invalid_size(self):
+        c = CanvasEditor()
+
+        self.assertRaises(InvalidCanvasSize, c.create_canvas, *(-1, 1))
 
     def test_not_horizontal_nor_vertical_line(self):
         c = CanvasEditor()

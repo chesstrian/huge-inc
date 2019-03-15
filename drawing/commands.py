@@ -1,29 +1,49 @@
 from drawing import InvalidArgumentsException, UnsupportedCommandException, CanvasNotCreatedException
 
 
-class Command(object):
+class BaseCommand(object):
+    """Abstract class for canvas operation commands
+    """
 
     def __init__(self, canvas, letter, *args):
+        """
+
+        :param canvas: Canvas class instance to work with
+        :param letter: Letter to define command
+        :param args: Array of command arguments
+        """
         self.canvas = canvas
 
         self.letter = letter
         self.arguments = list(map(self._cast_argument_to_int, args))
 
     def validate(self):
+        """Method to check arguments
+        """
         raise NotImplementedError
 
     def run(self):
+        """Method to call canvas operation related to command
+        """
         raise NotImplementedError
 
     @staticmethod
     def _cast_argument_to_int(value):
+        """Private method to cast a value to integer, if not possible, same value is returned
+
+        :param value: Value to convert to integer
+        :return: Cast of value to integer if possible, value otherwise
+        """
         try:
             return int(value)
         except ValueError:
             return value
 
 
-class CreateCanvasCommand(Command):
+class CreateCanvasCommand(BaseCommand):
+    """Implement command: C w h
+    w is width and h is height
+    """
 
     def __init__(self, canvas, *args):
         super(CreateCanvasCommand, self).__init__(canvas, 'C', *args)
@@ -43,7 +63,9 @@ class CreateCanvasCommand(Command):
         self.canvas.create_canvas(*self.arguments)
 
 
-class CreateLineCommand(Command):
+class CreateLineCommand(BaseCommand):
+    """Implement command: L x1 y1 x2 y2
+    """
 
     def __init__(self, canvas, *args):
         super(CreateLineCommand, self).__init__(canvas, 'L', *args)
@@ -71,7 +93,9 @@ class CreateLineCommand(Command):
         self.canvas.create_line(*self.arguments)
 
 
-class CreateRectangleCommand(Command):
+class CreateRectangleCommand(BaseCommand):
+    """Implement command: R x1 y1 x2 y2
+    """
 
     def __init__(self, canvas, *args):
         super(CreateRectangleCommand, self).__init__(canvas, 'R', *args)
@@ -99,7 +123,9 @@ class CreateRectangleCommand(Command):
         self.canvas.create_rectangle(*self.arguments)
 
 
-class BucketFillCommand(Command):
+class BucketFillCommand(BaseCommand):
+    """Implement command: B x y c
+    """
 
     def __init__(self, canvas, *args):
         super(BucketFillCommand, self).__init__(canvas, 'B', *args)
@@ -128,7 +154,9 @@ class BucketFillCommand(Command):
         self.canvas.bucket_fill(*self.arguments)
 
 
-class PrintCommand(Command):
+class PrintCommand(BaseCommand):
+    """Command not asked in requirements, implemented only for tool usability purposes with stdin/stdout
+    """
 
     def __init__(self, canvas):
         super(PrintCommand, self).__init__(canvas, 'P')
@@ -141,6 +169,12 @@ class PrintCommand(Command):
 
 
 def run_command(canvas, line, render=True):
+    """Method to run operations from file or stdin
+
+    :param canvas: Canvas instance to work with
+    :param line: Command from input
+    :param render: Optional parameter used to print, required to avoid prints in tests
+    """
     line = line.split(' ')
     letter = line.pop(0)
 
