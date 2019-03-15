@@ -62,7 +62,7 @@ class CanvasExampleTest(TestCase):
         c.create_line(1, 2, 6, 2)
 
         before = c.__str__()
-        c.bucket_fill(3, 2, 'o')
+        c.bucket_fill(3, 2, 'x')
         after = c.__str__()
 
         self.assertEqual(before, after)

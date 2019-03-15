@@ -1,5 +1,6 @@
 import unittest
 
+from drawing.tests.test_bucket_fill import BucketFillTest
 from drawing.tests.test_command_exceptions import CommandExceptionTest
 from drawing.tests.test_canvas_example import CanvasExampleTest
 from drawing.tests.test_command_example import CommandExampleTest
@@ -13,6 +14,7 @@ def suite():
     _suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CommandExceptionTest))
     _suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CreateLineTest))
     _suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CreateRectTest))
+    _suite.addTests(unittest.TestLoader().loadTestsFromTestCase(BucketFillTest))
     _suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CanvasExampleTest))
     _suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CommandExampleTest))
 

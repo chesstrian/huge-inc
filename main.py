@@ -3,7 +3,8 @@
 import argparse
 import sys
 
-from drawing import run_command, CanvasEditor, CanvasNotCreatedException, OutOfRangeException, InvalidLineException
+from drawing import run_command, CanvasEditor, CanvasNotCreatedException, OutOfRangeException, InvalidLineException, \
+    InvalidArgumentsException
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Command line for Drawing Tool')
@@ -32,7 +33,7 @@ if __name__ == '__main__':
         while line not in ('q', 'quit', 'exit'):
             try:
                 run_command(canvas, line)
-            except (CanvasNotCreatedException, OutOfRangeException, InvalidLineException) as e:
+            except (CanvasNotCreatedException, OutOfRangeException, InvalidLineException, InvalidArgumentsException) as e:
                 print(e.message)
 
             line = input('> ')

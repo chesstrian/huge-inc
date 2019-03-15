@@ -62,7 +62,8 @@ class CanvasEditor(object):
         if not (1 <= x <= self.width and 1 <= y <= self.height):
             raise OutOfRangeException('The seek is not inside the canvas')
 
-        if not self._is_fillable(x, y, c):
+        current_color = self.canvas[y][x]
+        if current_color == c:
             return
 
         points = set()
@@ -72,17 +73,17 @@ class CanvasEditor(object):
             x, y = points.pop()
             self.canvas[y][x] = c
 
-            if self._is_fillable(x - 1, y, c):
+            if self._is_fillable(x - 1, y, current_color):
                 points.add((x - 1, y))
-            if self._is_fillable(x + 1, y, c):
+            if self._is_fillable(x + 1, y, current_color):
                 points.add((x + 1, y))
-            if self._is_fillable(x, y - 1, c):
+            if self._is_fillable(x, y - 1, current_color):
                 points.add((x, y - 1))
-            if self._is_fillable(x, y + 1, c):
+            if self._is_fillable(x, y + 1, current_color):
                 points.add((x, y + 1))
 
     def _is_fillable(self, x, y, c):
-        return 1 <= x <= self.width and 1 <= y <= self.height and self.canvas[y][x] not in ('-', '|', 'x', c)
+        return 1 <= x <= self.width and 1 <= y <= self.height and self.canvas[y][x] == c
 
     def __str__(self):
         return '\n'.join([''.join(line) for line in self.canvas])
