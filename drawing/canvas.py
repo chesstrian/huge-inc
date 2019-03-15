@@ -71,16 +71,25 @@ class CanvasEditor(object):
 
         while points:
             x, y = points.pop()
-            self.canvas[y][x] = c
+            right = left = x
 
-            if self._is_fillable(x - 1, y, current_color):
-                points.add((x - 1, y))
-            if self._is_fillable(x + 1, y, current_color):
-                points.add((x + 1, y))
-            if self._is_fillable(x, y - 1, current_color):
-                points.add((x, y - 1))
-            if self._is_fillable(x, y + 1, current_color):
-                points.add((x, y + 1))
+            while self._is_fillable(left, y, current_color):
+                left -= 1
+
+            while self._is_fillable(right, y, current_color):
+                right += 1
+
+            for i in range(left + 1, right):
+                self.canvas[y][i] = c
+
+                top = y + 1
+                bottom = y - 1
+
+                if self._is_fillable(i, top, current_color):
+                    points.add((i, top))
+
+                if self._is_fillable(i, bottom, current_color):
+                    points.add((i, bottom))
 
     def _is_fillable(self, x, y, c):
         return 1 <= x <= self.width and 1 <= y <= self.height and self.canvas[y][x] == c
