@@ -1,4 +1,4 @@
-from drawing import InvalidArgumentsException, UnsupportedCommandException
+from drawing import InvalidArgumentsException, UnsupportedCommandException, CanvasNotCreatedException
 
 
 class Command(object):
@@ -49,7 +49,22 @@ class CreateLineCommand(Command):
         super(CreateLineCommand, self).__init__(canvas, 'L', *args)
 
     def validate(self):
-        pass
+        if not self.canvas.canvas:
+            raise CanvasNotCreatedException('You can only draw if a canvas has been created')
+
+        if len(self.arguments) != 4:
+            raise InvalidArgumentsException('Invalid number of arguments')
+
+        for argument in self.arguments:
+            if type(argument) is not int:
+                raise InvalidArgumentsException('Invalid argument type')
+
+        for i in range(4):
+            if i % 2 == 0 and not (1 <= self.arguments[i] <= self.canvas.width):
+                raise InvalidArgumentsException('Invalid argument value')
+
+            if i % 2 == 1 and not (1 <= self.arguments[i] <= self.canvas.height):
+                raise InvalidArgumentsException('Invalid argument value')
 
     def run(self):
         self.validate()
@@ -62,7 +77,22 @@ class CreateRectangleCommand(Command):
         super(CreateRectangleCommand, self).__init__(canvas, 'R', *args)
 
     def validate(self):
-        pass
+        if not self.canvas.canvas:
+            raise CanvasNotCreatedException('You can only draw if a canvas has been created')
+
+        if len(self.arguments) != 4:
+            raise InvalidArgumentsException('Invalid number of arguments')
+
+        for argument in self.arguments:
+            if type(argument) is not int:
+                raise InvalidArgumentsException('Invalid argument type')
+
+        for i in range(4):
+            if i % 2 == 0 and not (1 <= self.arguments[i] <= self.canvas.width):
+                raise InvalidArgumentsException('Invalid argument value')
+
+            if i % 2 == 1 and not (1 <= self.arguments[i] <= self.canvas.height):
+                raise InvalidArgumentsException('Invalid argument value')
 
     def run(self):
         self.validate()
@@ -75,7 +105,23 @@ class BucketFillCommand(Command):
         super(BucketFillCommand, self).__init__(canvas, 'B', *args)
 
     def validate(self):
-        pass
+        if not self.canvas.canvas:
+            raise CanvasNotCreatedException('You can only draw if a canvas has been created')
+
+        if len(self.arguments) != 3:
+            raise InvalidArgumentsException('Invalid number of arguments')
+
+        if not (type(self.arguments[0]) is int and type(self.arguments[1]) is int):
+            raise InvalidArgumentsException('Invalid argument type')
+
+        if type(self.arguments[2]) is not str:
+            raise InvalidArgumentsException('Invalid argument type')
+
+        if not (1 <= self.arguments[0] <= self.canvas.width):
+            raise InvalidArgumentsException('Invalid argument value')
+
+        if not (1 <= self.arguments[1] <= self.canvas.height):
+            raise InvalidArgumentsException('Invalid argument value')
 
     def run(self):
         self.validate()
