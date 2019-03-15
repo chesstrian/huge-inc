@@ -7,7 +7,7 @@ class Command(object):
         self.canvas = canvas
 
         self.letter = letter
-        self.arguments = map(self._cast_argument_to_int, args)
+        self.arguments = list(map(self._cast_argument_to_int, args))
 
     def validate(self):
         raise NotImplementedError
@@ -35,7 +35,7 @@ class CreateCanvasCommand(Command):
         if not (type(self.arguments[0]) is int and type(self.arguments[1]) is int):
             raise InvalidArgumentsException('Invalid argument type')
 
-        if not (self.arguments[0] > 1 and self.arguments[1] > 1):
+        if not (self.arguments[0] > 0 and self.arguments[1] > 0):
             raise InvalidArgumentsException('Invalid canvas size')
 
     def run(self):

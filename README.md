@@ -1,7 +1,12 @@
 # Huge Inc
 _Code Challenge_
 
-Demo app for Huge Inc's code challenge. Solution developed in Python 
+Demo app for Huge Inc's code challenge. Solution developed in Python 3.
+
+## Environment Setup
+
+* `virtualenv -p python3 envpy3`
+* `source envpy3/bin/activate`
 
 ## Run Tests
 
@@ -9,7 +14,7 @@ Demo app for Huge Inc's code challenge. Solution developed in Python
 
 ## Test Coverage
 
-* `pip install coverage`
+* `pip3 install coverage`
 * `coverage run tests.py`
 * `coverage report -m`
 

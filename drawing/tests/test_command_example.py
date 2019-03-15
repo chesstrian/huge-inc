@@ -1,6 +1,7 @@
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from drawing import CanvasEditor, run_command
+from drawing.commands import PrintCommand
 
 
 class CommandExampleTest(TestCase):
@@ -31,3 +32,15 @@ class CommandExampleTest(TestCase):
             result += '\n' if i < length - 1 else ''
 
             self.assertEqual(result, outputs[i])
+
+    def test_run_command(self):
+        canvas = CanvasEditor()
+
+        result = '---\n' \
+                 '| |\n' \
+                 '---'
+
+        with mock.patch('drawing.commands.PrintCommand') as MockPrint:
+            run_command(canvas, 'C 1 1')
+            MockPrint.assert_called_once_with(canvas)
+            self.assertEqual(canvas.__str__(), result)

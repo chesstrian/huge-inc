@@ -28,11 +28,11 @@ if __name__ == '__main__':
 
             file_output.close()
     else:
-        line = raw_input('> ')
+        line = input('> ')
         while line not in ('q', 'quit', 'exit'):
             try:
                 run_command(canvas, line)
             except (CanvasNotCreatedException, OutOfRangeException, InvalidLineException) as e:
                 print(e.message)
 
-            line = raw_input('> ')
+            line = input('> ')

@@ -1,4 +1,4 @@
-from exceptions import CanvasNotCreatedException, OutOfRangeException, InvalidLineException
+from drawing.exceptions import CanvasNotCreatedException, OutOfRangeException, InvalidLineException
 
 
 class CanvasEditor(object):
